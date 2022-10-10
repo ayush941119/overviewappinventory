@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:core="sap.ui.core">
+	<fb:FilterBar id="appInventoryFilterBar" search="onSearch" useToolbar="false" showGoOnFB="true" showFilterConfiguration="false">
+		<fb:filterItems>
+			<fb:FilterItem name="search" label = "{i18n>fuzzySearch}" partOfCurrentVariant="true" visibleInFilterBar="true">
+				<fb:control>
+					<SearchField showSearchButton = "false" placeholder = "{i18n>fuzzySearchPH}" value = "{appInventoryListView>/search}"/>
+				</fb:control>
+			</fb:FilterItem>
+            <fb:FilterItem name="appType" label="{i18n>appType}" partOfCurrentVariant="true" visibleInFilterBar="true">
+				<fb:control>
+					<MultiComboBox items="{
+							path: '/AppType'
+						}" selectedKeys="{appInventoryListView>/appTypes}">
+						<core:Item key="{ID}" text="{name}"/>
+					</MultiComboBox>
+				</fb:control>
+			</fb:FilterItem>
+            <fb:FilterItem name="pillar" label="{i18n>pillar}" partOfCurrentVariant="true" visibleInFilterBar="true">
+				<fb:control>
+					<MultiComboBox items="{
+							path: '/Pillar'
+						}" selectedKeys="{appInventoryListView>/pillars}">
+						<core:Item key="{ID}" text="{name}"/>
+					</MultiComboBox>
+				</fb:control>
+			</fb:FilterItem>
+            <fb:FilterItem name="region" label="{i18n>region}" partOfCurrentVariant="true" visibleInFilterBar="true">
+				<fb:control>
+					<MultiComboBox items="{
+							path: '/Region'
+						}" selectedKeys="{appInventoryListView>/regions}">
+						<core:Item key="{ID}" text="{name}"/>
+					</MultiComboBox>
+				</fb:control>
+			</fb:FilterItem>
+		</fb:filterItems>
+	</fb:FilterBar>
+</core:FragmentDefinition>

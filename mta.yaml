@@ -1,0 +1,150 @@
+_schema-version: "3.1"
+ID: overviewappinventory
+description: Overview App Inventory.
+version: 1.0.0
+modules:
+  - name: overviewappinventory-srv
+    type: nodejs
+    path: gen/srv
+    # provides:
+    #   - name: srv-api
+    #     properties:
+    #       srv-url: ${default-url}
+    requires:
+      - name: overviewappinventory-db
+      - name: uaa_overviewappinventory
+    parameters:
+      buildpack: nodejs_buildpack
+      host: ${appname}
+    build-parameters:
+      builder: npm-ci
+  - name: overviewappinventory-db-deployer
+    type: hdb
+    path: db
+    requires:
+      - name: overviewappinventory-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: overviewappinventory-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: overviewappinventory-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - appinvfe.zip
+          name: appinvfe
+          target-path: resources/
+        - artifacts:
+            - appinvfreestyle.zip
+          name: appinvfreestyle
+          target-path: resources/
+  - name: appinvfe
+    type: html5
+    path: app/appinv_fe
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+  - name: overviewappinventory-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: overviewappinventory-destination-service
+        parameters:
+          content-target: true
+      - name: overviewappinventory-repo-host
+        parameters:
+          service-key:
+            name: overviewappinventory-repo-host-key
+      - name: uaa_overviewappinventory
+        parameters:
+          service-key:
+            name: uaa_overviewappinventory-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: oaiMgdAppRouter_overviewappinventory_repo_host
+              ServiceInstanceName: overviewappinventory-html5-srv
+              ServiceKeyName: overviewappinventory-repo-host-key
+              sap.cloud.service: oaiMgdAppRouter
+            - Authentication: OAuth2UserTokenExchange
+              Name: oaiMgdAppRouter_uaa_overviewappinventory
+              ServiceInstanceName: overviewappinventory-xsuaa-service
+              ServiceKeyName: uaa_overviewappinventory-key
+              sap.cloud.service: oaiMgdAppRouter
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+  - name: appinvfreestyle
+    type: html5
+    path: app/appinv_freestyle
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+resources:
+  - name: overviewappinventory-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+  - name: overviewappinventory-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: overviewappinventory-html5-srv
+      service-plan: app-host
+  - name: overviewappinventory-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+              - Authentication: NoAuthentication
+                Name: app-inventory-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://${appname}.${default-domain}
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: overviewappinventory-destination-service
+      service-plan: lite
+  - name: uaa_overviewappinventory
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: overviewappinventory-xsuaa-service
+      service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+  appname: overviewappinventory-aldi
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx -p @sap/cds-dk cds build --production

@@ -1,0 +1,23 @@
+<mvc:View controllerName="appinvfreestyle.controller.AppInventoryList"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+    <f:DynamicPage>
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<core:Fragment fragmentName="appinvfreestyle.fragments.AppInventoryFilterBar" type="XML" />
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<core:Fragment fragmentName="appinvfreestyle.fragments.AppInventoryTable" type="XML" />
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

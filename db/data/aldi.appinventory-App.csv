@@ -1,0 +1,6 @@
+appId;appName;appType_ID;pillar_ID;itService;assignedGroup;region_ID
+APP01;Manage Store;62523a79-cb71-4ff6-9846-cd589180f58a;5a1e08cd-e846-492b-bfc0-64a4c28a5678;ITS1;Group1;ddcf90e6-0a6e-4bb8-b6a2-e3d77b08e91e
+APP02;Manage Deliveries;be67f7f4-4efc-4748-afda-c9e54a890629;5a1e08cd-e846-492b-bfc0-64a4c28a5678;ITS1;Group2;f4a9d47c-0a54-4c29-82e3-a1ab5a0d1620
+APP03;Display Sales Order;b0e30ded-201e-433b-9179-ecda220c88ae;5a1e08cd-e846-492b-bfc0-64a4c28a5678;ITS2;Group1;ddcf90e6-0a6e-4bb8-b6a2-e3d77b08e91e
+APP04;Manage Inventory;be67f7f4-4efc-4748-afda-c9e54a890629;5a1e08cd-e846-492b-bfc0-64a4c28a3579;ITS3;Group1;bca8ff54-aed6-4214-be42-07c26bddab2b
+APP05;Maintain Business Rules;8ae01904-a03f-4c9c-b8b3-b585efcf071e;5a1e08cd-e846-492b-bfc0-64a4c28a4598;ITS2;Group3;e671acd4-f753-4bbb-b279-4e30bc126dfd

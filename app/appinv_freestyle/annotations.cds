@@ -1,0 +1,1 @@
+using AppInventoryService as service from '../../srv/app-service';

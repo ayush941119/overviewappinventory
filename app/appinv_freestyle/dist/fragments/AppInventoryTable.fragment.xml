@@ -1,0 +1,68 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:core="sap.ui.core">
+    <Table
+        id="appInventoryTable"
+        items="{
+            path: '/App',
+            parameters:{ 
+                $expand : {
+                    'pillar':{
+                        '$select' : 'name'
+                    },
+                    'appType':{
+                        '$select' : 'name'
+                    }
+                },
+                $select : 'appId,appName,itService,assignedGroup'
+            }
+        }"
+        noDataText="{i18n>tableNoDataText}"
+        enableBusyIndicator="true"
+        growing="true"
+        growingScrollToLoad="true"
+        growingThreshold="20"
+        popinLayout="GridSmall"
+        width="auto"
+        mode="MultiSelect"
+        autoPopinMode="true"
+        updateFinished="onUpdateFinished"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="{appInventoryListView>/tableTitle}" />
+                <ToolbarSpacer />
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column hAlign="Left">
+                <Text text="{i18n>appId}" />
+            </Column>
+            <Column hAlign="Left">
+                <Text text="{i18n>appName}" />
+            </Column>
+            <Column hAlign="Right">
+                <Text text="{i18n>pillar}" />
+            </Column>
+            <Column hAlign="Right">
+                <Text text="{i18n>itService}" />
+            </Column>
+            <Column hAlign="Right">
+                <Text text="{i18n>appType}" />
+            </Column>
+            <Column hAlign="Right">
+                <Text text="{i18n>assignedGroup}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem type="Active">
+                <cells>
+                    <ObjectIdentifier title="{appId}" />
+                    <ObjectIdentifier title="{appName}" />
+                    <ObjectAttribute text="{pillar/name}" />
+                    <ObjectAttribute text="{itService}" />
+                    <ObjectAttribute text="{appType/name}" />
+                    <ObjectAttribute text="{assignedGroup}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

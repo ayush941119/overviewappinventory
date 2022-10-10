@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="AppInventoryService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="App" EntityType="AppInventoryService.App">
+                    <NavigationPropertyBinding Path="appType" Target="AppType"/>
+                    <NavigationPropertyBinding Path="pillar" Target="Pillar"/>
+                    <NavigationPropertyBinding Path="region" Target="Region"/>
+                </EntitySet>
+                <EntitySet Name="AppType" EntityType="AppInventoryService.AppType">
+                    <NavigationPropertyBinding Path="texts" Target="AppType_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="AppType_texts"/>
+                </EntitySet>
+                <EntitySet Name="Pillar" EntityType="AppInventoryService.Pillar">
+                    <NavigationPropertyBinding Path="texts" Target="Pillar_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Pillar_texts"/>
+                </EntitySet>
+                <EntitySet Name="Region" EntityType="AppInventoryService.Region">
+                    <NavigationPropertyBinding Path="texts" Target="Region_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Region_texts"/>
+                </EntitySet>
+                <EntitySet Name="AppType_texts" EntityType="AppInventoryService.AppType_texts"/>
+                <EntitySet Name="Pillar_texts" EntityType="AppInventoryService.Pillar_texts"/>
+                <EntitySet Name="Region_texts" EntityType="AppInventoryService.Region_texts"/>
+            </EntityContainer>
+            <EntityType Name="App">
+                <Key>
+                    <PropertyRef Name="appId"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="appId" Type="Edm.String" Nullable="false"/>
+                <Property Name="appName" Type="Edm.String"/>
+                <NavigationProperty Name="appType" Type="AppInventoryService.AppType">
+                    <ReferentialConstraint Property="appType_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="appType_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="pillar" Type="AppInventoryService.Pillar">
+                    <ReferentialConstraint Property="pillar_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="pillar_ID" Type="Edm.Guid"/>
+                <Property Name="itService" Type="Edm.String"/>
+                <Property Name="assignedGroup" Type="Edm.String"/>
+                <NavigationProperty Name="region" Type="AppInventoryService.Region">
+                    <ReferentialConstraint Property="region_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="region_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="AppType">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(AppInventoryService.AppType_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AppInventoryService.AppType_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Pillar">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(AppInventoryService.Pillar_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AppInventoryService.Pillar_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Region">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(AppInventoryService.Region_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AppInventoryService.Region_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="AppType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Pillar_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Region_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+            </EntityType>
+            <Annotations Target="AppInventoryService.App">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="appId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="appName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="pillar/name"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="itService"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="appType/name"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="assignedGroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>appType_ID</PropertyPath>
+                        <PropertyPath>pillar_ID</PropertyPath>
+                        <PropertyPath>region_ID</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="AppInventoryService.App/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="AppInventoryService.App/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="AppInventoryService.App/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="AppInventoryService.App/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/appId">
+                                        <Annotation Term="Common.Label" String="App ID"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/appName">
+                                        <Annotation Term="Common.Label" String="App Name"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/appType">
+                                        <Annotation Term="Common.Label" String="App Type"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/appType_ID">
+                                        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                                        <Annotation Term="Common.ValueList">
+                                            <Record Type="Common.ValueListType">
+                                                <PropertyValue Property="CollectionPath" String="AppType"/>
+                                                <PropertyValue Property="Parameters">
+                                                    <Collection>
+                                                        <Record Type="Common.ValueListParameterInOut">
+                                                            <PropertyValue Property="LocalDataProperty" PropertyPath="appType_ID"/>
+                                                            <PropertyValue Property="ValueListProperty" String="ID"/>
+                                                        </Record>
+                                                        <Record Type="Common.ValueListParameterDisplayOnly">
+                                                            <PropertyValue Property="ValueListProperty" String="name"/>
+                                                        </Record>
+                                                    </Collection>
+                                                </PropertyValue>
+                                                <PropertyValue Property="Label" String="App Types"/>
+                                            </Record>
+                                        </Annotation>
+                                        <Annotation Term="Common.Label" String="App Type"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/pillar">
+                                        <Annotation Term="Common.Label" String="Pillar"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/pillar_ID">
+                                        <Annotation Term="Common.Label" String="Pillar"/>
+                                        <Annotation Term="Common.ValueList">
+                                            <Record Type="Common.ValueListType">
+                                                <PropertyValue Property="Label" String="Pillar"/>
+                                                <PropertyValue Property="CollectionPath" String="Pillar"/>
+                                                <PropertyValue Property="Parameters">
+                                                    <Collection>
+                                                        <Record Type="Common.ValueListParameterInOut">
+                                                            <PropertyValue Property="LocalDataProperty" PropertyPath="pillar_ID"/>
+                                                            <PropertyValue Property="ValueListProperty" String="ID"/>
+                                                        </Record>
+                                                        <Record Type="Common.ValueListParameterDisplayOnly">
+                                                            <PropertyValue Property="ValueListProperty" String="name"/>
+                                                        </Record>
+                                                    </Collection>
+                                                </PropertyValue>
+                                            </Record>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/itService">
+                                        <Annotation Term="Common.Label" String="IT Service"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/assignedGroup">
+                                        <Annotation Term="Common.Label" String="Assigned Group"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/region">
+                                        <Annotation Term="Common.Label" String="Region"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.App/region_ID">
+                                        <Annotation Term="Common.Label" String="Region"/>
+                                        <Annotation Term="Common.ValueList">
+                                            <Record Type="Common.ValueListType">
+                                                <PropertyValue Property="Label" String="Region"/>
+                                                <PropertyValue Property="CollectionPath" String="Region"/>
+                                                <PropertyValue Property="Parameters">
+                                                    <Collection>
+                                                        <Record Type="Common.ValueListParameterInOut">
+                                                            <PropertyValue Property="LocalDataProperty" PropertyPath="region_ID"/>
+                                                            <PropertyValue Property="ValueListProperty" String="ID"/>
+                                                        </Record>
+                                                        <Record Type="Common.ValueListParameterDisplayOnly">
+                                                            <PropertyValue Property="ValueListProperty" String="name"/>
+                                                        </Record>
+                                                    </Collection>
+                                                </PropertyValue>
+                                            </Record>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.AppType/ID">
+                                        <Annotation Term="Common.Text" Path="name">
+                                            <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.AppType/name">
+                                        <Annotation Term="Common.Label" String="App Type"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.Pillar/name">
+                                        <Annotation Term="Common.Label" String="Pillar"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.Region/name">
+                                        <Annotation Term="Common.Label" String="Region"/>
+                                    </Annotations>
+                                    <Annotations Target="AppInventoryService.AppType_texts/locale">
+                                        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                        </Annotations>
+                                        <Annotations Target="AppInventoryService.Pillar_texts/locale">
+                                            <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                            </Annotations>
+                                            <Annotations Target="AppInventoryService.Region_texts/locale">
+                                                <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>
