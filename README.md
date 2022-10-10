@@ -1,25 +1,19 @@
-# Getting Started
+# Overview App Inventory
 
-Welcome to your new project.
+ALDI Challange
 
-It contains these folders and files, following our recommended project layout:
+It contains these folders and files, following the recommended project layout:
 
 File or Folder | Purpose
 ---------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
-
+`app/` | List Report UI Applications - via Fiori Elements and Freestyle
+`db/` | Domain models and Data
+`srv/` | Service Artifacts and UI Annotations
+`package.json` | Project Metadata and Configuration
+`readme.md` | Overview
 
 ## Next Steps
 
-- Open a new terminal and run `cds watch` 
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
-
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
+- Run `npm run build` and `npm run deploy` to run on BTP. 
+  Launchpad configuration already embedded. Simply, Pull from Content Explorer on SAP Launchpad Service.
+- Run Locally via `cds deploy --to sqlite` and `cds watch`
