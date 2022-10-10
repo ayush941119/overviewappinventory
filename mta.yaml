@@ -109,6 +109,8 @@ resources:
       service-plan: app-host
   - name: overviewappinventory-destination-service
     type: org.cloudfoundry.managed-service
+    # requires:
+    # - name: srv-api 
     parameters:
       config:
         HTML5Runtime_enabled: true
@@ -124,6 +126,7 @@ resources:
                 Name: app-inventory-api
                 ProxyType: Internet
                 Type: HTTP
+                # URL: ~{srv-api/srv-url}
                 URL: https://${appname}.${default-domain}
                 HTML5.DynamicDestination: true
                 HTML5.ForwardAuthToken: true
@@ -142,7 +145,7 @@ resources:
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
-  appname: overviewappinventory-aldi
+  appname: overviewappinventory-aldi-${org}-${space}
 build-parameters:
   before-all:
     - builder: custom

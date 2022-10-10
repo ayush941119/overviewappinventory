@@ -14,6 +14,6 @@ File or Folder | Purpose
 
 ## Next Steps
 
-- Run `npm run build` and `npm run deploy` to run on BTP. 
-  Launchpad configuration already embedded. Simply, Pull from Content Explorer on SAP Launchpad Service.
-- Run Locally via `cds deploy --to sqlite` and `cds watch`
+- Run `npm install`, `npm run build` and `npm run deploy` to run on BTP. 
+  Also, Launchpad configurations are already embedded. Simply, Pull from Content Explorer on SAP Launchpad Service.
+- Run Locally via `cds deploy --to sqlite` and `cds watch`.
